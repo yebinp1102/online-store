@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
+import FileUpload from '../../utils/FileUpload';
 
 const Continents = [
   {key: 1, value: '아프리카'},
@@ -20,10 +21,10 @@ const UploadProductPage = () => {
 
   return (
     <UploadWarp>
-      <section className='flex-center'>
+      <section className='flex-center flex-column'>
         <h1 className='mg-2'>여행 상품 업로드</h1>
         <form>
-          <div>Image Edit Space</div>
+          <FileUpload/>
           <div className='flex-column'>
             <label>제목</label>
             <input
@@ -41,8 +42,9 @@ const UploadProductPage = () => {
             />
             <label>가격</label>
             <input
+              placeholder='0'
               required
-              type='text'
+              type='number'
               value={price}
               onChange={(e)=>setPrice(e.target.value)}
             />
