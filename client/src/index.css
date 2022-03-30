@@ -37,3 +37,22 @@ input.error {
   height: 5px;
   margin-top: -12px;
 }
+
+.flex-center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.flex-column{
+  display: flex;
+  flex-direction: column;
+}
+
+.mg-2{
+  margin: 2rem 0;
+}
+.mg-1{
+  margin: 1rem 0;
+}
