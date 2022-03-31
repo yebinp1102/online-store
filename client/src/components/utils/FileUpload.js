@@ -3,7 +3,7 @@ import Dropzone from 'react-dropzone'
 import styled from 'styled-components'
 import axios from 'axios';
 
-const FileUpload = () => {
+const FileUpload = (props) => {
   
   const [images, setImages] = useState([]);
   
@@ -20,10 +20,19 @@ const FileUpload = () => {
       .then(res=>{
         if(res.data.success){
           setImages([...images, res.data.filePath])
+          props.refreshFunction([...images, res.data.filePath])
         }else{
           alert('파일 업로드에 실패 했습니다.')
         }
       })
+  }
+
+  const handleDelete = (image) => {
+    const currentIndex = images.indexOf(image)
+    let newImages = [...images]
+    newImages.splice(currentIndex, 1)
+    setImages(newImages);
+    props.refreshFunction(newImages)
   }
 
   return (
@@ -40,7 +49,7 @@ const FileUpload = () => {
       </Dropzone>
       <ImageWrap>
         {images.map((image, idx)=>(
-          <div key={idx}>
+          <div onClick={()=>handleDelete(image)} key={idx}>
             <img src={`http://localhost:5000/${image}`}></img>
           </div>
         ))}
@@ -75,7 +84,7 @@ const ImageWrap = styled.div`
   display: flex;
   width: 350px;
   height: 240px;
-  overflowX: scroll;
+  overflow-x: scroll;
 
   img{
     min-width: 300px;

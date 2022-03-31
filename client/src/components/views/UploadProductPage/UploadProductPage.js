@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import React, { useState } from 'react'
 import styled from 'styled-components';
 import FileUpload from '../../utils/FileUpload';
@@ -12,19 +13,45 @@ const Continents = [
   {key: 7, value: '남극 대륙'}
 ]
 
-const UploadProductPage = () => {
+const UploadProductPage = (props) => {
+
   const [title, setTitle] = useState('');
-  const [desc, setDesc] = useState('');
+  const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [continent, setContinent] = useState(1);
+  const [images, setImages] = useState([]);
+  
+  const updateImages = (newImages) => {
+    setImages(newImages)
+  }
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const body = {
+      writer: props.user.userData._id,
+      title,
+      description,
+      price,
+      continent,
+      images
+    }
+    Axios.post("/api/product", body)
+      .then(res => {
+        if(res.data.success){
+          alert('상품 업로드에 성공 했습니다.')
+          props.history.push('/')
+        }else{
+          alert('상품 업로드에 실패 했습니다.')
+        }
+      })
+  }
 
   return (
     <UploadWarp>
       <section className='flex-center flex-column'>
         <h1 className='mg-2'>여행 상품 업로드</h1>
-        <form>
-          <FileUpload/>
+        <form onSubmit={handleSubmit}>
+          <FileUpload refreshFunction={updateImages} />
           <div className='flex-column'>
             <label>제목</label>
             <input
@@ -35,8 +62,8 @@ const UploadProductPage = () => {
             />
             <label>내용</label>
             <textarea 
-              value={desc}
-              onChange={(e)=>setDesc(e.target.value)}
+              value={description}
+              onChange={(e)=>setDescription(e.target.value)}
               required
               type='text'
             />
@@ -54,7 +81,7 @@ const UploadProductPage = () => {
               <option key={Continent.key} value={Continent.key}>{Continent.value}</option>
             ))}
           </select>
-          <button>작성하기</button>
+          <button disabled={!title || !description || !price || !continent ? true : false} type='submit'>작성하기</button>
         </form>
       </section>
     </UploadWarp>
