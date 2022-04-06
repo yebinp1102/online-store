@@ -7,28 +7,54 @@ import Meta from '../../utils/Meta'
 function LandingPage() {
   
   const [products, setProducts] = useState([])
+  const [skip, setSkip] = useState(0);
+  const [limit, setLimit] = useState(6);
+  const [postSize, setPostSize] = useState(0)
 
   useEffect(()=>{
-    axios.get('/api/product/products')
-      .then(res=>{
-        if(res.data.success){
-          setProducts(res.data.productInfo)
-        }else{
-          alert('글 불러오는 데 실패 했습니다.')
-        }
-      })
+
+    let body = {
+      skip,
+      limit
+    }
+    getProducts(body);
   },[])
 
   const renderCards = products.map((product, idx)=>{
     return(
-      <div className='product'>
-        <Card key={idx} cover={<img src={`http://localhost:5000/${product.images[0]}`} />} />
+      <div key={idx} className='product'>
+        <Card cover={<img src={`http://localhost:5000/${product.images[0]}`} />} />
         <Meta title={product.title}/>
       </div>
     )
   })
 
+  const getProducts = (body) => {
+    axios.post('/api/product/products' ,body)
+      .then(res=>{
+        if(res.data.success){
+          if(body.loadMore){
+            setProducts([...products, ...res.data.productInfo])
+          }else{
+            setProducts(res.data.productInfo)
+          }
+          setPostSize(res.data.postSize)
+        }else alert('상품을 불러오는데 실패 했습니다.')
+      })
+  }
 
+  const handleReadMore = () => {
+    let skip =+ limit
+
+    let body = {
+      skip,
+      limit,
+      loadMore: true
+    }
+
+    getProducts(body);
+    setSkip(skip)
+  }
 
   return (
     <LandingWrap>
@@ -38,9 +64,12 @@ function LandingPage() {
         {renderCards}
       </div>
 
-      <div className='btn-center'>
-        <button>더보기</button>
-      </div>
+      {postSize >= limit && 
+        <div className='btn-center'>
+          <button onClick={handleReadMore}>더보기</button>
+        </div>
+      }
+
     </LandingWrap>
   )
 }

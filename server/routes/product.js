@@ -36,14 +36,18 @@ router.post('/', (req, res)=>{
   });
 })
 
-router.get('/products', (req, res)=>{
-  // DB에서 데이터 찾을 때 쓰는 메서드 find. 조건 추가하고 싶다면 메서드의 인자에 객체 형태로 전달
-  // populate 메서드는 인수로 받은 것의 모든 정보를 가져옴
+router.post('/products', (req, res)=>{
+
+  let limit = req.body.limit ? parseInt(req.body.limit) : 20;
+  let skip = req.body.skip ? parseInt(req.body.skip) : 0;
+
   Product.find()
     .populate('writer')
+    .skip(skip)
+    .limit(limit)
     .exec((err, productInfo)=>{
       if(err) return res.status(400).json({success: false, err})
-      return res.status(200).json({success: true, productInfo})
+      return res.status(200).json({success: true, productInfo, postSize: productInfo.length})
     })
 })
 
