@@ -21,6 +21,10 @@ body {
   background-color: #fff;
 }
 
+li, ul{
+  list-style: none;
+}
+
 .app {
   flex-direction: column;
   display: flex;
@@ -62,4 +66,10 @@ input.error {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
+}
+
+.grid-2{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 50px;
 }

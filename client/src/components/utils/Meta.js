@@ -1,10 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Meta = ({title}) => {
+const Meta = ({title, price}) => {
   return (
     <MetaWrap>
       <p>{title}</p>
+      <p>$ {price}</p>
     </MetaWrap>
   )
 }
@@ -14,4 +15,11 @@ export default Meta
 const MetaWrap = styled.div`
   height: 70px;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+  p{
+    margin: 0;
+  }
 `;

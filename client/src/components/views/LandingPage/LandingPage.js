@@ -3,6 +3,8 @@ import axios from 'axios'
 import styled from 'styled-components'
 import Card from '../../utils/Card'
 import Meta from '../../utils/Meta'
+import CheckBox from './Section/CheckBox'
+import { continents } from './Section/Datas'
 
 function LandingPage() {
   
@@ -10,6 +12,10 @@ function LandingPage() {
   const [skip, setSkip] = useState(0);
   const [limit, setLimit] = useState(6);
   const [postSize, setPostSize] = useState(0)
+  const [Filters, setFilters] = useState({
+    continents: [],
+    price: []
+  })
 
   useEffect(()=>{
 
@@ -24,7 +30,7 @@ function LandingPage() {
     return(
       <div key={idx} className='product'>
         <Card cover={<img src={`http://localhost:5000/${product.images[0]}`} />} />
-        <Meta title={product.title}/>
+        <Meta title={product.title} price={product.price}/>
       </div>
     )
   })
@@ -56,9 +62,30 @@ function LandingPage() {
     setSkip(skip)
   }
 
+  const showFilterResults = (filters) => {
+    let body = {
+      skip: 0,
+      limit,
+      filters
+    }
+    getProducts(body)
+    setSkip(0)
+  }
+
+  const handleFilters = (filters, category) => {
+    const newFilters = {...Filters}
+    newFilters[category] = filters
+    showFilterResults(newFilters)
+  }
+
   return (
     <LandingWrap>
       <h2>어디든 여행을 떠나보세요!</h2>
+
+      <div className='grid-2'>
+        <CheckBox handleFilters={filters => handleFilters(filters, "continents")} lists={continents}/>
+        <CheckBox lists={continents}/>
+      </div>
 
       <div className='grid-3'>
         {renderCards}
