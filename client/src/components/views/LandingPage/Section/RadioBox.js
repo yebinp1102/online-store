@@ -1,34 +1,31 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-const CheckBox = ({lists, handleFilters}) => {
+const RadioBox = ({lists, handleFilters}) => {
   const [clicked, setClicked] = useState(false)
-  const [checked, setChecked] = useState([])
+  const [value, setValue] = useState(0)
 
-  const handleToggle = (idx) => {
-    const currentIdx = checked.indexOf(idx)
-    const newChecked = [...checked]
-    if(currentIdx === -1) newChecked.push(idx)
-    else newChecked.splice(currentIdx, 1)
-    setChecked(newChecked)
-    handleFilters(newChecked)
+  const handleChange = (e) => {
+    setValue(e.target.value)
+    handleFilters(e.target.value)
   }
 
   return (
     <BoxWrap className='mg-2'>
       <div className='main' onClick={()=>setClicked(!clicked)}>
-        <span>지역</span>
+        <span>가격</span>
         <span>{clicked ? "-" : "+"}</span>
       </div>
       
       {clicked ?      
-        <ul>
+        <ul value={value}>
           {lists.map((list)=>(
             <li key={list._id}>
               <input 
-                type="checkbox" 
-                checked={checked.indexOf(list._id) === -1 ? false : true} 
-                onChange={()=>handleToggle(list._id)} 
+                type="radio" 
+                value={list._id}
+                checked={value == list._id ? true : false}
+                onChange={handleChange}
               />
               <span>{list.name}</span>
             </li>
@@ -42,7 +39,7 @@ const CheckBox = ({lists, handleFilters}) => {
   )
 }
 
-export default CheckBox
+export default RadioBox
 
 const BoxWrap = styled.div`
 
@@ -71,6 +68,5 @@ const BoxWrap = styled.div`
       }
     }
   }
-  
   
 `;

@@ -4,7 +4,8 @@ import styled from 'styled-components'
 import Card from '../../utils/Card'
 import Meta from '../../utils/Meta'
 import CheckBox from './Section/CheckBox'
-import { continents } from './Section/Datas'
+import { continents, price } from './Section/Datas'
+import RadioBox from './Section/RadioBox'
 
 function LandingPage() {
   
@@ -72,10 +73,27 @@ function LandingPage() {
     setSkip(0)
   }
 
+  const handlePrice = (value)=>{
+    const data = price
+    let arr = []
+    for(let key in data){
+      if(data[key]._id === parseInt(value, 10)){
+        arr = data[key].array;
+      }
+    }
+    return arr;
+  }
+
   const handleFilters = (filters, category) => {
     const newFilters = {...Filters}
     newFilters[category] = filters
+
+    if(category === "price"){
+      let priceValue = handlePrice(filters)
+      newFilters[category] = priceValue
+    }
     showFilterResults(newFilters)
+    setFilters(newFilters)
   }
 
   return (
@@ -84,7 +102,7 @@ function LandingPage() {
 
       <div className='grid-2'>
         <CheckBox handleFilters={filters => handleFilters(filters, "continents")} lists={continents}/>
-        <CheckBox lists={continents}/>
+        <RadioBox lists={price} handleFilters={filters => handleFilters(filters, "price")} />
       </div>
 
       <div className='grid-3'>
