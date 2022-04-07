@@ -40,7 +40,7 @@ router.post('/products', (req, res)=>{
 
   let limit = req.body.limit ? parseInt(req.body.limit) : 20;
   let skip = req.body.skip ? parseInt(req.body.skip) : 0;
-  
+  let word = req.body.searchWord;
   let findArgs = {}
 
   for(let key in req.body.filters){
@@ -55,8 +55,20 @@ router.post('/products', (req, res)=>{
       }
     }
   }
+  
 
-  Product.find(findArgs)
+  if(word){
+    Product.find(findArgs)
+      .find({$text: {$search: word}})
+      .populate('writer')
+      .skip(skip)
+      .limit(limit)
+      .exec((err, productInfo)=>{
+        if(err) return res.status(400).json({success: false, err})
+        return res.status(200).json({success: true, productInfo, postSize: productInfo.length})
+      })
+  }else{
+    Product.find(findArgs)
     .populate('writer')
     .skip(skip)
     .limit(limit)
@@ -64,6 +76,7 @@ router.post('/products', (req, res)=>{
       if(err) return res.status(400).json({success: false, err})
       return res.status(200).json({success: true, productInfo, postSize: productInfo.length})
     })
+  }
 })
 
 module.exports = router;

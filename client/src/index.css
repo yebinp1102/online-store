@@ -73,3 +73,7 @@ input.error {
   grid-template-columns: repeat(2, 1fr);
   gap: 50px;
 }
+
+input:focus{
+  outline: none;
+}

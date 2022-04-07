@@ -9583,10 +9583,10 @@
   "resolved" "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-2.0.4.tgz"
   "version" "2.0.4"
 
-"react-icons@^3.7.0":
-  "integrity" "sha512-gKbYKR+4QsD3PmIHLAM9TDDpnaTsr3XZeK1NTAb6WQQ+gxEdJ0xuCgLq0pxXdS7Utg2AIpcVhM1ut/jlDhcyNg=="
-  "resolved" "https://registry.npmjs.org/react-icons/-/react-icons-3.9.0.tgz"
-  "version" "3.9.0"
+"react-icons@^3.11.0":
+  "integrity" "sha512-JRgiI/vdF6uyBgyZhVyYJUZAop95Sy4XDe/jmT3R/bKliFWpO/uZBwvSjWEdxwzec7SYbEPNPck0Kff2tUGM2Q=="
+  "resolved" "https://registry.npmjs.org/react-icons/-/react-icons-3.11.0.tgz"
+  "version" "3.11.0"
   dependencies:
     "camelcase" "^5.0.0"
 

@@ -6,6 +6,7 @@ import Meta from '../../utils/Meta'
 import CheckBox from './Section/CheckBox'
 import { continents, price } from './Section/Datas'
 import RadioBox from './Section/RadioBox'
+import Search from './Section/Search'
 
 function LandingPage() {
   
@@ -17,6 +18,7 @@ function LandingPage() {
     continents: [],
     price: []
   })
+  const [searchWord, setSearchWord] = useState('');
 
   useEffect(()=>{
 
@@ -96,6 +98,18 @@ function LandingPage() {
     setFilters(newFilters)
   }
 
+  const updateSearchWord = (newSearchWord) =>{
+    let body = {
+      skip: 0,
+      limit,
+      filters: Filters,
+      searchWord: newSearchWord
+    }
+    setSkip(0)
+    setSearchWord(newSearchWord)
+    getProducts(body)
+  }
+
   return (
     <LandingWrap>
       <h2>어디든 여행을 떠나보세요!</h2>
@@ -103,6 +117,10 @@ function LandingPage() {
       <div className='grid-2'>
         <CheckBox handleFilters={filters => handleFilters(filters, "continents")} lists={continents}/>
         <RadioBox lists={price} handleFilters={filters => handleFilters(filters, "price")} />
+      </div>
+
+      <div className='flex-end'>
+        <Search refreshFunction={updateSearchWord}/>
       </div>
 
       <div className='grid-3'>
@@ -139,5 +157,10 @@ const LandingWrap = styled.section`
     margin-top: 50px;
     display: flex;
     justify-content: center;
+  }
+
+  .flex-end{
+    display: flex;
+    justify-content: end;
   }
 `;
