@@ -32,7 +32,7 @@ function LandingPage() {
   const renderCards = products.map((product, idx)=>{
     return(
       <div key={idx} className='product'>
-        <Card cover={<img src={`http://localhost:5000/${product.images[0]}`} />} />
+        <Card cover={<a href={`/product/${product._id}`}><img src={`http://localhost:5000/${product.images[0]}`} /></a>} />
         <Meta title={product.title} price={product.price}/>
       </div>
     )
