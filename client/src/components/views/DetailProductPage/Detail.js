@@ -25,11 +25,11 @@ const Detail = () => {
     <DetailWrap>
       <div className='container'>
 
-        <h1>{product.title}</h1>
+        <h1 className='mg-2'>{product.title}</h1>
 
         <div className='grid-2 pd-2'>
           <ProductImage detail={product} />
-          <ProductInfo />
+          <ProductInfo detail={product}/>
         </div>
 
       </div>
@@ -40,5 +40,7 @@ const Detail = () => {
 export default Detail
 
 const DetailWrap = styled.section`
-
+  .mg-2{
+    text-align: center;
+  }
 `;
