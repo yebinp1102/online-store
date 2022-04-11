@@ -5,7 +5,7 @@ const Meta = ({title, price}) => {
   return (
     <MetaWrap>
       <p>{title}</p>
-      <p>$ {price}</p>
+      <p>{price.toLocaleString('ko-KR')} 원</p>
     </MetaWrap>
   )
 }
