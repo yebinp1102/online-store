@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const UserCardBlock = ({products}) => {
+const UserCardBlock = ({products, removeItem}) => {
 
   const renderCartImage = (images) => {
     if(images.length > 0) {
@@ -11,8 +11,8 @@ const UserCardBlock = ({products}) => {
   }
 
   const renderItems = () => (
-    products && products.map(product=>(
-      <tr>
+    products && products.map((product,idx)=>(
+      <tr key={idx}>
         <td>
           <img src={renderCartImage(product.images)} />
         </td>
@@ -20,17 +20,17 @@ const UserCardBlock = ({products}) => {
           {product.quantity} 개
         </td>
         <td>
-          {product.price} 원
+          {product.price.toLocaleString('ko-KR')} 원
         </td>
         <td>
-          <button>삭제하기</button>
+          <button onClick={()=>removeItem(product._id)}>삭제하기</button>
         </td>
       </tr>
     ))
   )
 
   return (
-    <BlockWrap>
+    <BlockWrap className='pd-2'>
       <table>
         <thead>
           <tr>
