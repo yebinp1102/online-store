@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { getCartItems, removeCartItem } from '../../../_actions/user_actions'
 import UserCardBlock from './Sections/UserCardBlock';
 import styled from 'styled-components';
+import Paypal from '../../utils/Paypal';
 
 const CartPage = ({user}) => {
   const dispatch = useDispatch();
@@ -54,6 +55,8 @@ const CartPage = ({user}) => {
           : 
           (<p className="mg-2">장바구니가 비었습니다.</p>)}
       </Total>
+
+      <Paypal />
     </CartWrap>
   )
 }
