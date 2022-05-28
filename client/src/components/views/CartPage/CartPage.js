@@ -56,7 +56,7 @@ const CartPage = ({user}) => {
           (<p className="mg-2">장바구니가 비었습니다.</p>)}
       </Total>
 
-      <Paypal />
+      {showTotal && <Paypal/>}
     </CartWrap>
   )
 }

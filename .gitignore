@@ -1,8 +1,6 @@
-/node_modules
+api/node_modules
+client/node_modules
 /build
-
-dev.js
-
 
 .DS_Store
 
@@ -11,7 +9,7 @@ yarn-debug.kog*
 yarn-error.log*
 
 .vscode
-
+.env
 
 
 ### react ###
